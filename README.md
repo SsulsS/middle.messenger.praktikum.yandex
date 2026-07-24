@@ -1,4 +1,4 @@
-﻿# Chat — Single Page Application
+﻿# Chat —— Single Page Application
 
 Учебный мессенджер на TypeScript. Проект реализует клиентскую маршрутизацию, страницы регистрации, входа, профиля и чата (спринт 1).
 
