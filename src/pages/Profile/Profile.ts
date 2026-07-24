@@ -37,26 +37,26 @@ if (!currentUser) {
   const modalProfile = document.getElementById('modal-profile') as HTMLDivElement | null;
   const modalPassword = document.getElementById('modal-password') as HTMLDivElement | null;
 
-  function openModal(modal: HTMLElement | null) {
+  const openModal = (modal: HTMLElement | null) => {
     if (!modal) return;
     modal.classList.add('modal_open');
     modal.setAttribute('aria-hidden', 'false');
     document.addEventListener('keydown', onKeyDown);
-  }
+  };
 
-  function closeModal(modal: HTMLElement | null) {
+  const closeModal = (modal: HTMLElement | null) => {
     if (!modal) return;
     modal.classList.remove('modal_open');
     modal.setAttribute('aria-hidden', 'true');
     document.removeEventListener('keydown', onKeyDown);
-  }
+  };
 
-  function onKeyDown(e: KeyboardEvent) {
+  const onKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       closeModal(modalProfile);
       closeModal(modalPassword);
     }
-  }
+  };
 
 
   document.querySelectorAll('[data-modal-close]').forEach((el) =>
@@ -79,18 +79,18 @@ if (!currentUser) {
 
   openPasswordBtn?.addEventListener('click', () => openModal(modalPassword));
 
-  function showStatus(el: HTMLParagraphElement | null, message: string, isError: boolean) {
+  const showStatus = (el: HTMLParagraphElement | null, message: string, isError: boolean) => {
     if (!el) return;
     el.textContent = message;
     el.className = isError ? 'profile__status profile__status_error' : 'profile__status profile__status_success';
-  }
+  };
 
-  function isValidPhone(phone: string) {
+  const isValidPhone = (phone: string) => {
     const normalized = phone.replace(/[^\d+]/g, '');
     return /^\+\d{10,15}$/.test(normalized);
-  }
+  };
 
-  function handleProfileSubmit(event: Event) {
+  const handleProfileSubmit = (event: Event) => {
     event.preventDefault();
     if (!profileForm || !currentUser) return;
 
@@ -128,9 +128,9 @@ if (!currentUser) {
     } else {
       applyUpdate();
     }
-  }
+  };
 
-  function handlePasswordSubmit(event: Event) {
+  const handlePasswordSubmit = (event: Event) => {
     event.preventDefault();
     if (!passwordForm || !currentUser) return;
 
@@ -149,7 +149,7 @@ if (!currentUser) {
 
     showStatus(passwordStatus, 'Пароль успешно изменён', false);
     passwordForm.reset();
-  }
+  };
 
   logoutBtn?.addEventListener('click', () => {
     authService.logout();
