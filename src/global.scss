@@ -1,15 +1,15 @@
 :root {
   --bg: #f5f7ff;
-  --panel: rgba(255, 255, 255, 0.98);
-  --panel-strong: #ffffff;
-  --panel-soft: rgba(245, 247, 255, 0.85);
+  --panel: rgb(255 255 255 / 98%);
+  --panel-strong: #fff;
+  --panel-soft: rgb(245 247 255 / 85%);
   --text: #161b28;
-  --muted: rgba(22, 31, 52, 0.65);
+  --muted: rgb(22 31 52 / 65%);
   --accent: #3c56ff;
   --accent-strong: #5660ff;
   --danger: #d32f2f;
-  --border: rgba(32, 44, 98, 0.08);
-  --shadow: 0 24px 80px rgba(42, 59, 112, 0.12);
+  --border: rgb(32 44 98 / 8%);
+  --shadow: 0 24px 80px rgb(42 59 112 / 12%);
 }
 
 * {
@@ -27,7 +27,7 @@ html {
 
 body {
   min-height: 100vh;
-  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: Inter, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: #f5f7ff;
   color: var(--text);
 }
@@ -59,12 +59,12 @@ textarea {
 }
 
 ::selection {
-  background: rgba(108, 125, 255, 0.32);
+  background: rgb(108 125 255 / 32%);
   color: var(--text);
 }
 
 ::placeholder {
-  color: rgba(22, 31, 52, 0.45);
+  color: rgb(22 31 52 / 45%);
 }
 
 ::-webkit-scrollbar {
@@ -77,12 +77,12 @@ textarea {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.14);
+  background: rgb(255 255 255 / 14%);
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.22);
+  background: rgb(255 255 255 / 22%);
 }
 
 button:disabled {
@@ -90,7 +90,7 @@ button:disabled {
   cursor: not-allowed;
 }
 
-@keyframes floatGlow {
+@keyframes float-glow {
   0%,
   100% {
     transform: translateY(0);
@@ -101,7 +101,7 @@ button:disabled {
   }
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   html {
     font-size: 14px;
   }
