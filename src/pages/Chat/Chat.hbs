@@ -1,0 +1,33 @@
+﻿<div class="chat">
+  <div class="chat__wrapper">
+    <aside class="chat__sidebar">
+      <div class="chat__sidebar-header">
+        <div class="chat__sidebar-title">Чаты</div>
+        <nav>
+          <a class="chat__profile-link" href="/profile">Профиль</a>
+        </nav>
+      </div>
+
+      <ul class="chat__list" id="chat-list"></ul>
+    </aside>
+
+    <section class="chat__main">
+      <div class="chat__top">
+        <div class="chat__title-block">
+          <div class="chat__title-avatar"></div>
+          <div class="chat__title-info">
+            <div class="chat__title" id="chat-title">Выберите чат</div>
+            <div class="chat__title-status">Выберите чат, чтобы отправить сообщение</div>
+          </div>
+        </div>
+      </div>
+
+      <ul class="chat__messages" id="messages"></ul>
+
+      <form class="chat__input-area" id="chat-form">
+        <input class="chat__message-input" type="text" id="message-input" name="message" placeholder="Сообщение" />
+        <button class="chat__send-button" type="submit" id="send-btn">➤</button>
+      </form>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+﻿<div class="profile__card">
+  <nav class="profile__nav">
+    <a class="profile__back-link" href="/">← Назад к чатам</a>
+  </nav>
+
+  <div class="profile__top">
+    <div class="profile__avatar">
+      {{#if avatarUrl}}
+        <img class="profile__avatar-image" src="{{avatarUrl}}" alt="{{fullName}}" />
+      {{else}}
+        <div class="profile__avatar-fallback"></div>
+      {{/if}}
+    </div>
+    <div class="profile__name">{{fullName}}</div>
+  </div>
+
+  <div class="profile__details">
+    <div class="profile__detail-row">
+      <p class="profile__detail-label">Почта</p>
+      <p class="profile__detail-value">{{email}}</p>
+    </div>
+    <div class="profile__detail-row">
+      <p class="profile__detail-label">Логин</p>
+      <p class="profile__detail-value">{{username}}</p>
+    </div>
+    <div class="profile__detail-row">
+      <p class="profile__detail-label">Имя</p>
+      <p class="profile__detail-value">{{firstName}}</p>
+    </div>
+    <div class="profile__detail-row">
+      <p class="profile__detail-label">Фамилия</p>
+      <p class="profile__detail-value">{{lastName}}</p>
+    </div>
+    <div class="profile__detail-row">
+      <p class="profile__detail-label">Имя в чате</p>
+      <p class="profile__detail-value">{{chatName}}</p>
+    </div>
+    <div class="profile__detail-row">
+      <p class="profile__detail-label">Телефон</p>
+      <p class="profile__detail-value">{{phone}}</p>
+    </div>
+  </div>
+
+  <div class="profile__actions">
+    <button type="button" class="profile__action-button" id="open-edit-profile">Изменить данные</button>
+    <button type="button" class="profile__action-button" id="open-change-password">Изменить пароль</button>
+  </div>
+
+  <div class="modal" id="modal-profile" aria-hidden="true">
+    <div class="modal__overlay" data-modal-close></div>
+    <div class="modal__content" role="dialog" aria-modal="true">
+      <button type="button" class="modal__close" data-modal-close aria-label="Закрыть">×</button>
+      <form class="profile__form" id="profile-form">
+        <h3 class="profile__form-title">Изменить данные</h3>
+        <div class="profile__field">
+          <label class="profile__field-label" for="edit-first-name">Имя</label>
+          <input id="edit-first-name" type="text" name="first_name" class="profile__input" />
+        </div>
+        <div class="profile__field">
+          <label class="profile__field-label" for="edit-last-name">Фамилия</label>
+          <input id="edit-last-name" type="text" name="second_name" class="profile__input" />
+        </div>
+        <div class="profile__field">
+          <label class="profile__field-label" for="edit-display-name">Имя в чате</label>
+          <input id="edit-display-name" type="text" name="display_name" class="profile__input" />
+        </div>
+        <div class="profile__field">
+          <label class="profile__field-label" for="edit-login">Логин</label>
+          <input id="edit-login" type="text" name="login" class="profile__input" />
+        </div>
+        <div class="profile__field">
+          <label class="profile__field-label" for="edit-email">Почта</label>
+          <input id="edit-email" type="email" name="email" class="profile__input" />
+        </div>
+        <div class="profile__field">
+          <label class="profile__field-label" for="edit-phone">Телефон</label>
+          <input id="edit-phone" type="tel" name="phone" class="profile__input" placeholder="+79001234567" />
+        </div>
+        <div class="profile__field">
+          <label class="profile__field-label" for="edit-avatar">Аватар</label>
+          <input id="edit-avatar" type="file" name="avatar" class="profile__input" accept="image/*" />
+        </div>
+        <p class="profile__status" id="profile-status"></p>
+        <button type="submit" class="profile__submit-button">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-password" aria-hidden="true">
+    <div class="modal__overlay" data-modal-close></div>
+    <div class="modal__content" role="dialog" aria-modal="true">
+      <button type="button" class="modal__close" data-modal-close aria-label="Закрыть">×</button>
+      <form class="profile__form" id="password-form">
+        <h3 class="profile__form-title">Изменить пароль</h3>
+        <div class="profile__field">
+          <label class="profile__field-label" for="edit-old-password">Старый пароль</label>
+          <input id="edit-old-password" type="password" name="old_password" class="profile__input" />
+        </div>
+        <div class="profile__field">
+          <label class="profile__field-label" for="edit-new-password">Новый пароль</label>
+          <input id="edit-new-password" type="password" name="new_password" class="profile__input" />
+        </div>
+        <p class="profile__status" id="password-status"></p>
+        <button type="submit" class="profile__submit-button">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <button type="button" class="profile__logout-button" id="logout-btn">Выйти</button>
+</div>

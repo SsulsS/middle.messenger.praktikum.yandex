@@ -1,0 +1,51 @@
+.error-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+
+  &__card {
+    text-align: center;
+    max-width: 680px;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  &__code {
+    font-size: 120px;
+    margin: 0 0 16px;
+    color: #161b28;
+    font-weight: 700;
+  }
+
+  &__title {
+    margin: 0 0 8px;
+    color: rgb(22 31 52 / 80%);
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  &__message {
+    margin: 8px 0 18px;
+    color: rgb(22 31 52 / 60%);
+  }
+
+  &__link {
+    color: #3c56ff;
+    text-decoration: underline;
+    font-weight: 700;
+    display: inline-block;
+    margin-top: 12px;
+  }
+
+  @media (width <= 640px) {
+    &__code {
+      font-size: 64px;
+    }
+
+    &__card {
+      padding: 0 12px;
+    }
+  }
+}
