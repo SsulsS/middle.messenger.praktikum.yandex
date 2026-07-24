@@ -48,4 +48,4 @@ npm run start
 ## Деплой
 
 - SPA-деплой на Netlify: для корректной работы client-side маршрутизации в проекте добавлен `public/_redirects` с правилом `/* /index.html 200`.
-- Ссылка на развёрнутый проект: https://your-site.netlify.app <!-- TODO: заменить на реальную ссылку -->
+- Ссылка на развёрнутый проект: https://brilliant-lamington-df230c.netlify.app/ <!-- TODO: заменить на реальную ссылку -->
