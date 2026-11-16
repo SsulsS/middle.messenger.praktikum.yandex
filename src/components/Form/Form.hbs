@@ -1,0 +1,10 @@
+<form class="{{className}}" novalidate>
+  {{#if title}}
+    <h2 class="{{titleClass}}">{{title}}</h2>
+  {{/if}}
+  {{{inputs}}}
+  {{#if statusClass}}
+    <p class="{{statusClass}}{{#if status}} {{statusClass}}_{{statusKind}}{{/if}}" role="status">{{status}}</p>
+  {{/if}}
+  {{{submitButton}}}
+</form>

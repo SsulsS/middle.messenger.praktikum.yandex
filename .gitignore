@@ -4,7 +4,6 @@ dist/
 /.cache
 /.idea
 *.log
-# Logs
 logs
 *.log
 npm-debug.log*

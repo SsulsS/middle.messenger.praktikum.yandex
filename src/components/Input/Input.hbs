@@ -1,0 +1,16 @@
+<div class="{{wrapperClass}}">
+  {{#if label}}
+    <label class="{{labelClass}}" for="{{id}}">{{label}}</label>
+  {{/if}}
+  <input
+    id="{{id}}"
+    name="{{name}}"
+    type="{{type}}"
+    class="{{fieldClass}}{{#if error}} {{invalidClass}}{{/if}}"
+    placeholder="{{placeholder}}"
+    value="{{value}}"
+    {{#if autocomplete}}autocomplete="{{autocomplete}}"{{/if}}
+    aria-invalid="{{#if error}}true{{else}}false{{/if}}"
+  />
+  <span class="{{errorClass}}" data-role="error" aria-live="polite">{{error}}</span>
+</div>

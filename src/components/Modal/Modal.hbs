@@ -1,0 +1,7 @@
+<div class="modal{{#if isOpen}} modal_open{{/if}}" aria-hidden="{{#if isOpen}}false{{else}}true{{/if}}">
+  <div class="modal__overlay" data-modal-close></div>
+  <div class="modal__content" role="dialog" aria-modal="true" aria-label="{{title}}">
+    {{{closeButton}}}
+    {{{content}}}
+  </div>
+</div>

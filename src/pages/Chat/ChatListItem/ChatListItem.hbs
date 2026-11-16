@@ -1,0 +1,15 @@
+<li class="chat__list-item{{#if isActive}} chat__list-item_active{{/if}}">
+  <div class="chat__list-item-left">
+    <div class="chat__avatar" aria-hidden="true">{{avatarLetter}}</div>
+    <div class="chat__list-item-content">
+      <div class="chat__list-item-name">{{title}}</div>
+      <div class="chat__list-item-preview">{{preview}}</div>
+    </div>
+  </div>
+  <div class="chat__list-item-meta">
+    <span class="chat__list-item-time">{{time}}</span>
+    {{#if unreadCount}}
+      <span class="chat__list-item-unread">{{unreadCount}}</span>
+    {{/if}}
+  </div>
+</li>

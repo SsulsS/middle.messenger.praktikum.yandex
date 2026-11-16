@@ -1,14 +1,18 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config';
 
-import dotenv from 'dotenv';
-
-
-dotenv.config();
-
+const PORT = 3000;
 
 export default defineConfig({
-  server: {
-    open: true,
-    port: Number(process.env.PORT) || 3000,
+  resolve: {
+    tsconfigPaths: true,
   },
-})
+  server: {
+    port: PORT,
+  },
+  preview: {
+    port: PORT,
+  },
+  test: {
+    environment: 'jsdom',
+  },
+});
