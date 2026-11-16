@@ -1,7 +1,7 @@
 .chat {
   min-height: 100vh;
   padding: 24px;
-  background: #f5f7ff;
+  background: var(--bg);
   background-image: radial-gradient(circle at top left, rgb(94 101 255 / 12%), transparent 28%),
     radial-gradient(circle at bottom right, rgb(99 116 255 / 8%), transparent 24%);
 
@@ -32,16 +32,16 @@
   &__sidebar-title {
     font-size: 18px;
     font-weight: 700;
-    color: #161b28;
+    color: var(--text);
   }
 
   &__profile-link {
     display: inline-block;
     border-radius: 18px;
-    border: 1px solid rgb(32 44 98 / 8%);
+    border: 1px solid var(--border);
     padding: 12px 18px;
-    background: #fff;
-    color: #161b28;
+    background: var(--panel-strong);
+    color: var(--text);
     font-weight: 700;
     text-decoration: none;
     transition: transform 0.2s ease, background 0.2s ease;
@@ -53,7 +53,7 @@
   }
 
   &__list {
-    background: #fff;
+    background: var(--panel-strong);
     border-radius: 16px;
     border: 1px solid rgb(32 44 98 / 6%);
     padding: 12px;
@@ -101,7 +101,7 @@
     height: 44px;
     border-radius: 50%;
     background: #f3f5ff;
-    color: #3c56ff;
+    color: var(--accent);
     font-weight: 700;
     display: grid;
     place-items: center;
@@ -113,7 +113,7 @@
   }
 
   &__list-item-name {
-    color: #161b28;
+    color: var(--text);
     font-weight: 700;
     font-size: 14px;
     margin: 0;
@@ -148,8 +148,8 @@
     height: 20px;
     border-radius: 999px;
     padding: 0 6px;
-    background: #3c56ff;
-    color: #fff;
+    background: var(--accent);
+    color: var(--panel-strong);
     font-size: 12px;
     display: grid;
     place-items: center;
@@ -163,7 +163,7 @@
   }
 
   &__main {
-    background: #fff;
+    background: var(--panel-strong);
     border-radius: 32px;
     overflow: hidden;
     display: flex;
@@ -175,7 +175,7 @@
 
   &__top {
     padding: 18px 22px;
-    border-bottom: 1px solid rgb(32 44 98 / 8%);
+    border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -193,8 +193,8 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border: 1px solid rgb(32 44 98 / 8%);
-    background: #f5f7ff;
+    border: 1px solid var(--border);
+    background: var(--bg);
   }
 
   &__title-info {
@@ -202,7 +202,7 @@
   }
 
   &__title {
-    color: #161b28;
+    color: var(--text);
     font-size: 16px;
     font-weight: 700;
     margin-bottom: 4px;
@@ -270,14 +270,14 @@
     border: 1px solid rgb(88 103 255 / 8%);
 
     .chat__message_received & {
-      background: #fff;
-      color: #161b28;
+      background: var(--panel-strong);
+      color: var(--text);
       box-shadow: 0 8px 20px rgb(22 31 52 / 4%);
     }
 
     .chat__message_sent & {
-      background: #3c56ff;
-      color: #fff;
+      background: var(--accent);
+      color: var(--panel-strong);
       border-color: rgb(60 86 255 / 28%);
       box-shadow: 0 8px 20px rgb(60 86 255 / 8%);
     }
@@ -294,17 +294,37 @@
     padding: 16px 20px 20px;
     display: grid;
     grid-template-columns: 1fr auto;
+    align-items: end;
     gap: 12px;
     border-top: 1px solid rgb(32 44 98 / 6%);
-    background: #fff;
+    background: var(--panel-strong);
+  }
+
+  &__input-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__input-error {
+    font-size: 12px;
+    color: var(--danger);
+    min-height: 14px;
+    padding-left: 4px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+
+    &:not(:empty) {
+      opacity: 1;
+    }
   }
 
   &__message-input {
     width: 100%;
     border-radius: 22px;
     border: 1px solid rgb(200 205 220 / 40%);
-    background: #fff;
-    color: #161b28;
+    background: var(--panel-strong);
+    color: var(--text);
     padding: 14px 18px;
 
     &::placeholder {
@@ -313,16 +333,20 @@
 
     &:focus {
       outline: none;
-      border-color: #3c56ff;
+      border-color: var(--accent);
       box-shadow: 0 0 0 4px rgb(60 86 255 / 12%);
+    }
+
+    &_invalid {
+      border-color: var(--danger);
     }
   }
 
   &__send-button {
     border-radius: 18px;
     padding: 10px 14px;
-    background: #3c56ff;
-    color: #fff;
+    background: var(--accent);
+    color: var(--panel-strong);
     font-weight: 700;
     border: none;
     cursor: pointer;

@@ -1,0 +1,40 @@
+.modal {
+  display: none;
+
+  &_open {
+    display: block;
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgb(10 20 40 / 45%);
+  }
+
+  &__content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(100%, 720px);
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    background: var(--panel-strong);
+    border-radius: 16px;
+    padding: 20px 24px;
+    box-shadow: 0 24px 60px rgb(22 31 52 / 24%);
+  }
+
+  &__close {
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    border: none;
+    background: transparent;
+    font-size: 22px;
+    cursor: pointer;
+  }
+}

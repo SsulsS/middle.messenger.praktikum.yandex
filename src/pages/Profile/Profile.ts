@@ -1,161 +1,157 @@
-﻿import Handlebars from 'handlebars';
+import { Block, type IBlockProps } from 'core/Block';
+
+import { authController } from 'controllers/AuthController';
+
+import { navigate } from 'utils/navigate';
+import { type TFormData } from 'types/form';
+import { type IUser } from 'types/user';
+import { ROUTES } from 'constants/general';
+
+import Button from 'components/Button/Button';
+import Form from 'components/Form/Form';
+import Modal from 'components/Modal/Modal';
+
+import {
+  EMPTY_VALUE_TEXT,
+  PASSWORD_FIELDS,
+  PROFILE_INPUT_CLASSES,
+  getProfileFields,
+} from './constants';
 import template from './Profile.hbs?raw';
 import './Profile.scss';
-import { authService } from '../../utils/auth';
 
-const renderPage = Handlebars.compile(template);
-
-const currentUser = authService.getUser();
-
-if (!currentUser) {
-  window.location.href = '/login';
-} else {
-
-  const appDiv = document.querySelector<HTMLDivElement>('#app')!;
-  const fullName = `${currentUser.firstName || ''} ${currentUser.lastName || ''}`.trim();
-  appDiv.className = 'profile';
-  appDiv.innerHTML = renderPage({
-    username: currentUser.username,
-    fullName: fullName || currentUser.username,
-    email: currentUser.email || 'не указан',
-    firstName: currentUser.firstName || '',
-    lastName: currentUser.lastName || '',
-    chatName: currentUser.displayName || currentUser.username || currentUser.firstName || '',
-    phone: currentUser.phone || 'не указан',
-    avatarUrl: currentUser.avatar || (currentUser as any).avatarUrl || '',
-  });
-
-  const profileForm = document.getElementById('profile-form') as HTMLFormElement | null;
-  const passwordForm = document.getElementById('password-form') as HTMLFormElement | null;
-  const logoutBtn = document.getElementById('logout-btn') as HTMLButtonElement | null;
-  const profileStatus = document.getElementById('profile-status') as HTMLParagraphElement | null;
-  const passwordStatus = document.getElementById('password-status') as HTMLParagraphElement | null;
-
-
-  const openEditBtn = document.getElementById('open-edit-profile') as HTMLButtonElement | null;
-  const openPasswordBtn = document.getElementById('open-change-password') as HTMLButtonElement | null;
-  const modalProfile = document.getElementById('modal-profile') as HTMLDivElement | null;
-  const modalPassword = document.getElementById('modal-password') as HTMLDivElement | null;
-
-  const openModal = (modal: HTMLElement | null) => {
-    if (!modal) return;
-    modal.classList.add('modal_open');
-    modal.setAttribute('aria-hidden', 'false');
-    document.addEventListener('keydown', onKeyDown);
-  };
-
-  const closeModal = (modal: HTMLElement | null) => {
-    if (!modal) return;
-    modal.classList.remove('modal_open');
-    modal.setAttribute('aria-hidden', 'true');
-    document.removeEventListener('keydown', onKeyDown);
-  };
-
-  const onKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      closeModal(modalProfile);
-      closeModal(modalPassword);
-    }
-  };
-
-
-  document.querySelectorAll('[data-modal-close]').forEach((el) =>
-    el.addEventListener('click', () => {
-      closeModal(modalProfile);
-      closeModal(modalPassword);
-    }),
-  );
-
-  openEditBtn?.addEventListener('click', () => {
-
-    (document.getElementById('edit-first-name') as HTMLInputElement | null)!.value = currentUser.firstName || '';
-    (document.getElementById('edit-last-name') as HTMLInputElement | null)!.value = currentUser.lastName || '';
-    (document.getElementById('edit-display-name') as HTMLInputElement | null)!.value = (currentUser as any).displayName || '';
-    (document.getElementById('edit-login') as HTMLInputElement | null)!.value = currentUser.username || '';
-    (document.getElementById('edit-email') as HTMLInputElement | null)!.value = currentUser.email || '';
-    (document.getElementById('edit-phone') as HTMLInputElement | null)!.value = currentUser.phone || '';
-    openModal(modalProfile);
-  });
-
-  openPasswordBtn?.addEventListener('click', () => openModal(modalPassword));
-
-  const showStatus = (el: HTMLParagraphElement | null, message: string, isError: boolean) => {
-    if (!el) return;
-    el.textContent = message;
-    el.className = isError ? 'profile__status profile__status_error' : 'profile__status profile__status_success';
-  };
-
-  const isValidPhone = (phone: string) => {
-    const normalized = phone.replace(/[^\d+]/g, '');
-    return /^\+\d{10,15}$/.test(normalized);
-  };
-
-  const handleProfileSubmit = (event: Event) => {
-    event.preventDefault();
-    if (!profileForm || !currentUser) return;
-
-    const firstName = profileForm.querySelector<HTMLInputElement>('input[name="first_name"]')?.value.trim() || undefined;
-    const lastName = profileForm.querySelector<HTMLInputElement>('input[name="second_name"]')?.value.trim() || undefined;
-    const displayName = profileForm.querySelector<HTMLInputElement>('input[name="display_name"]')?.value.trim() || undefined;
-    const login = profileForm.querySelector<HTMLInputElement>('input[name="login"]')?.value.trim() || undefined;
-    const email = profileForm.querySelector<HTMLInputElement>('input[name="email"]')?.value.trim() || undefined;
-    const phone = profileForm.querySelector<HTMLInputElement>('input[name="phone"]')?.value.trim() || undefined;
-    const avatarFile = profileForm.querySelector<HTMLInputElement>('input[name="avatar"]')?.files?.[0];
-
-    if (phone && !isValidPhone(phone)) {
-      showStatus(profileStatus, 'Введите телефон в международном формате: +79001234567', true);
-      return;
-    }
-
-    const applyUpdate = (avatar?: string) => {
-      authService.setUser({
-        ...currentUser!,
-        firstName: firstName ?? currentUser!.firstName,
-        lastName: lastName ?? currentUser!.lastName,
-        displayName: displayName ?? currentUser!.displayName,
-        username: login ?? currentUser!.username,
-        email: email ?? currentUser!.email,
-        phone: phone ?? currentUser!.phone,
-        ...(avatar ? { avatar } : {}),
-      });
-      showStatus(profileStatus, 'Данные профиля обновлены', false);
-    };
-
-    if (avatarFile) {
-      const reader = new FileReader();
-      reader.onload = () => applyUpdate(reader.result as string);
-      reader.readAsDataURL(avatarFile);
-    } else {
-      applyUpdate();
-    }
-  };
-
-  const handlePasswordSubmit = (event: Event) => {
-    event.preventDefault();
-    if (!passwordForm || !currentUser) return;
-
-    const oldPassword = passwordForm.querySelector<HTMLInputElement>('input[name="old_password"]')?.value.trim() || '';
-    const newPassword = passwordForm.querySelector<HTMLInputElement>('input[name="new_password"]')?.value.trim() || '';
-
-    if (!oldPassword || !newPassword) {
-      showStatus(passwordStatus, 'Пожалуйста, заполните все поля', true);
-      return;
-    }
-
-    if (newPassword.length < 6) {
-      showStatus(passwordStatus, 'Новый пароль должен быть не менее 6 символов', true);
-      return;
-    }
-
-    showStatus(passwordStatus, 'Пароль успешно изменён', false);
-    passwordForm.reset();
-  };
-
-  logoutBtn?.addEventListener('click', () => {
-    authService.logout();
-    window.location.href = '/login';
-  });
-
-  profileForm?.addEventListener('submit', handleProfileSubmit);
-  passwordForm?.addEventListener('submit', handlePasswordSubmit);
+interface IProfileDetail {
+  label: string;
+  value: string;
 }
+
+interface IProfilePageProps extends IBlockProps {
+  fullName: string;
+  avatarUrl: string;
+  details: IProfileDetail[];
+  chatUrl: string;
+}
+
+type TProfileViewProps = Pick<
+  IProfilePageProps,
+  'fullName' | 'avatarUrl' | 'details'
+>;
+
+const GUEST_USER: IUser = {
+  id: '',
+  login: '',
+  email: '',
+  firstName: '',
+  secondName: '',
+  phone: '',
+};
+
+const PROFILE_FORM_STYLE = {
+  className: 'profile__form',
+  titleClass: 'profile__form-title',
+  statusClass: 'profile__status',
+  submitText: 'Сохранить',
+  submitClass: 'profile__submit-button',
+  inputClasses: PROFILE_INPUT_CLASSES,
+};
+
+const getViewProps = (user: IUser): TProfileViewProps => {
+  const fullName = `${user.firstName} ${user.secondName}`.trim();
+
+  return {
+    fullName: fullName || user.login,
+    avatarUrl: user.avatar ?? '',
+    details: [
+      { label: 'Почта', value: user.email || EMPTY_VALUE_TEXT },
+      { label: 'Логин', value: user.login },
+      { label: 'Имя', value: user.firstName || EMPTY_VALUE_TEXT },
+      { label: 'Фамилия', value: user.secondName || EMPTY_VALUE_TEXT },
+      { label: 'Имя в чате', value: user.displayName || user.login },
+      { label: 'Телефон', value: user.phone || EMPTY_VALUE_TEXT },
+    ],
+  };
+};
+
+class ProfilePage extends Block<IProfilePageProps> {
+  private readonly editForm: Form;
+
+  constructor() {
+    const user = authController.getCurrentUser() ?? GUEST_USER;
+
+    const editForm = new Form({
+      ...PROFILE_FORM_STYLE,
+      title: 'Изменить данные',
+      fields: getProfileFields(user),
+      onSubmit: (data) => this._handleProfileSubmit(data),
+    });
+    const passwordForm = new Form({
+      ...PROFILE_FORM_STYLE,
+      title: 'Изменить пароль',
+      fields: PASSWORD_FIELDS,
+      onSubmit: () => {
+        passwordForm.reset();
+        passwordForm.showStatus('Пароль успешно изменён', 'success');
+      },
+    });
+    const editModal = new Modal({
+      title: 'Изменить данные',
+      content: editForm,
+    });
+    const passwordModal = new Modal({
+      title: 'Изменить пароль',
+      content: passwordForm,
+    });
+
+    super({
+      ...getViewProps(user),
+      chatUrl: ROUTES.chat,
+      editModal,
+      passwordModal,
+      openEditButton: new Button({
+        text: 'Изменить данные',
+        className: 'profile__action-button',
+        events: { click: () => editModal.open() },
+      }),
+      openPasswordButton: new Button({
+        text: 'Изменить пароль',
+        className: 'profile__action-button',
+        events: { click: () => passwordModal.open() },
+      }),
+      logoutButton: new Button({
+        text: 'Выйти',
+        className: 'profile__logout-button',
+        events: {
+          click: () => {
+            authController.logout();
+            navigate(ROUTES.login);
+          },
+        },
+      }),
+    });
+
+    this.editForm = editForm;
+  }
+
+  protected render(): DocumentFragment {
+    return this.compile(template);
+  }
+
+  private _handleProfileSubmit(data: TFormData): void {
+    authController
+      .updateProfile(data)
+      .then((user) => {
+        this.setProps(getViewProps(user));
+        this.editForm.showStatus('Данные профиля обновлены', 'success');
+      })
+      .catch((error: unknown) => {
+        const reason = error instanceof Error ? error.message : String(error);
+
+        this.editForm.showStatus(
+          `Не удалось сохранить профиль: ${reason}`,
+          'error'
+        );
+      });
+  }
+}
+
+export default ProfilePage;

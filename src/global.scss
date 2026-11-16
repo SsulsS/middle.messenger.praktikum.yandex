@@ -1,15 +1,13 @@
 :root {
   --bg: #f5f7ff;
-  --panel: rgb(255 255 255 / 98%);
   --panel-strong: #fff;
-  --panel-soft: rgb(245 247 255 / 85%);
   --text: #161b28;
   --muted: rgb(22 31 52 / 65%);
   --accent: #3c56ff;
   --accent-strong: #5660ff;
   --danger: #d32f2f;
+  --success: #1e8c45;
   --border: rgb(32 44 98 / 8%);
-  --shadow: 0 24px 80px rgb(42 59 112 / 12%);
 }
 
 * {
@@ -28,7 +26,7 @@ html {
 body {
   min-height: 100vh;
   font-family: Inter, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f5f7ff;
+  background: var(--bg);
   color: var(--text);
 }
 
@@ -90,17 +88,6 @@ button:disabled {
   cursor: not-allowed;
 }
 
-@keyframes float-glow {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
 @media (width <= 768px) {
   html {
     font-size: 14px;
@@ -109,10 +96,10 @@ button:disabled {
 
 @media print {
   body {
-    background:white;
+    background: white;
   }
 
   #app {
-    background:white;
+    background: white;
   }
 }

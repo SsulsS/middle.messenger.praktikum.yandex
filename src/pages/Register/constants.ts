@@ -1,0 +1,55 @@
+import { type IFormField } from 'types/form';
+
+export const REGISTER_FIELDS: IFormField[] = [
+  {
+    id: 'register-email',
+    name: 'email',
+    label: 'Почта',
+    type: 'email',
+    placeholder: 'pochta@yandex.ru',
+    autocomplete: 'email',
+    rule: 'email',
+  },
+  {
+    id: 'register-login',
+    name: 'login',
+    label: 'Логин',
+    placeholder: 'ivanivanov',
+    autocomplete: 'username',
+    rule: 'login',
+  },
+  {
+    id: 'register-first-name',
+    name: 'first_name',
+    label: 'Имя',
+    placeholder: 'Иван',
+    autocomplete: 'given-name',
+    rule: 'first_name',
+  },
+  {
+    id: 'register-second-name',
+    name: 'second_name',
+    label: 'Фамилия',
+    placeholder: 'Иванов',
+    autocomplete: 'family-name',
+    rule: 'second_name',
+  },
+  {
+    id: 'register-phone',
+    name: 'phone',
+    label: 'Телефон',
+    type: 'tel',
+    placeholder: '+79001234567',
+    autocomplete: 'tel',
+    rule: 'phone',
+  },
+  {
+    id: 'register-password',
+    name: 'password',
+    label: 'Пароль',
+    type: 'password',
+    placeholder: '••••••••',
+    autocomplete: 'new-password',
+    rule: 'password',
+  },
+];
